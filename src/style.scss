@@ -1,24 +1,13 @@
 $main-color: #21aa91;
 
 .team-members-grid {
-	margin-top: 20rem;
-	margin-bottom: 20rem;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	display: flex;
+	flex-wrap: wrap;
 	gap: 2rem;
-	@media (max-width: 992px) {
-		& {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	@media (max-width: 576px) {
-		& {
-			grid-template-columns: 1fr;
-		}
-	}
+	justify-content: center;
 
 	.member-card {
+		flex: 0 0 calc(33.333% - 2rem);
 		box-shadow:
 			rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
 			rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
@@ -26,7 +15,7 @@ $main-color: #21aa91;
 		justify-self: center;
 		position: relative;
 		overflow: hidden;
-		height: 27rem;
+		height: 30rem;
 		cursor: pointer;
 		transition: all 0.5s ease;
 		border-radius: 5px;
@@ -57,18 +46,24 @@ $main-color: #21aa91;
 			}
 
 			.member-overlay {
+				box-sizing: border-box;
 				position: absolute;
 				bottom: 0;
 				left: 0;
 				width: 100%;
 				background: linear-gradient(
 					180deg,
-					rgba(237, 237, 237, 0) 0%,
+					rgba(0, 0, 0, 0) 0%,
+					rgba(0, 0, 0, 0.1) 25%,
+					rgba(0, 0, 0, 0.3) 50%,
+					rgba(0, 0, 0, 0.6) 75%,
 					rgba(0, 0, 0, 1) 100%
 				);
 				color: #fff;
-				padding-top: 5rem;
+				padding-top: 14rem;
 				padding-bottom: 1rem;
+				padding-right: 1rem;
+				padding-left: 1rem;
 				text-align: center;
 				transition: all 0.5s ease;
 				border-top-left-radius: 5px;
@@ -76,15 +71,17 @@ $main-color: #21aa91;
 
 				.member-name {
 					margin: 0;
-					font-size: 1.2rem;
+					font-size: 1.4rem;
+					color: #fff !important;
 				}
 
 				.member-position {
 					margin: 0;
 					font-size: 1.1rem;
-					font-weight: 600;
+					font-weight: 700;
 					color: $main-color;
 					letter-spacing: 1px;
+					line-height: 1.6;
 				}
 			}
 		}
@@ -110,6 +107,7 @@ $main-color: #21aa91;
 			.member-bio {
 				margin-bottom: 0.5rem;
 				font-size: 0.9rem;
+				line-height: 1.6;
 			}
 
 			.member-contact {
@@ -120,7 +118,7 @@ $main-color: #21aa91;
 				font-size: 0.95rem;
 				color: #fff;
 				text-decoration: none;
-				font-weight: 500;
+				font-weight: 700;
 
 				.icon-email,
 				.icon-phone {
@@ -137,13 +135,17 @@ $main-color: #21aa91;
 		&:hover .member-overlay {
 			opacity: 0;
 		}
+	}
 
-		@media (min-width: 576px) and (max-width: 992px) {
-			&:last-of-type:nth-child(odd) {
-				grid-column: 1 / 3;
-				justify-self: center;
-				width: calc(50% - 1rem);
-			}
+	@media (max-width: 992px) {
+		.member-card {
+			flex: 1 1 calc(50% - 2rem);
+		}
+	}
+
+	@media (max-width: 619px) {
+		.member-card {
+			flex: 1 1 calc(100% - 2rem);
 		}
 	}
 }

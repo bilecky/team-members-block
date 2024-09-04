@@ -6,8 +6,6 @@ export default function save({ attributes }) {
 
 	return (
 		<div {...useBlockProps.save()}>
-			{'Example Static block – hello from the saved content!'}
-
 			<TeamMembers members={attributes.teamMembers} />
 		</div>
 	)

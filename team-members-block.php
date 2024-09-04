@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Plugin Name:       Team Members Block
+ * Plugin Name:       Team Members Plugin Block
  * Plugin URI:        https://github.com/bilecky/team-members-block
- * Description:       Wyswietlanie czlonkow Hubry. Stworzone przez bilecky na potrzeby HUBRA
+ * Description:       Wtyczka odpowiedzialna za mapowanie i wyświetlanie członków zespołu firmy Hubra w formie nowoczesnych kart. Stworzone przez bilecky na potrzeby HUBRA
  * Version:           0.1.0
  * Requires at least: 6.2
  * Requires PHP:      7.0
@@ -37,11 +37,11 @@ add_action('init', 'create_block_team_members_block_init');
 // ----------------------------------------------------
 
 
-function team_member_admin_styles()
-{
-	wp_enqueue_style('team-member-admin-style', plugin_dir_url(__FILE__) . '/admin-style.css');
-}
-add_action('admin_enqueue_scripts', 'team_member_admin_styles');
+// function team_member_admin_styles()
+// {
+// 	wp_enqueue_style('team-member-admin-style', plugin_dir_url(__FILE__) . '/admin-style.css');
+// }
+// add_action('admin_enqueue_scripts', 'team_member_admin_styles');
 
 // ----------------------------------------------------
 
@@ -57,6 +57,7 @@ function register_team_member_post_type()
 		'capability_type'     => 'post',
 		'has_archive'         => false,
 		'hierarchical'        => false,
+		'menu_icon'           => 'dashicons-groups', // Dodano ikonę Dashicon
 		'menu_position'       => null,
 		'supports'            => array('title', 'thumbnail'),
 		'show_in_rest'        => true,
