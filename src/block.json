@@ -7,7 +7,12 @@
 	"category": "widgets",
 	"description": "Blok mapuje wszystkich członków zespołu wraz z informacjami.Blok zaprogramowany przez bilecky dla: HUBRA",
 	"example": {},
-	"attributes": {},
+	"attributes": {
+		"teamMembers": {
+			"type": "array",
+			"default": []
+		}
+	},
 	"supports": {
 		"color": {
 			"background": false,
@@ -21,6 +26,5 @@
 	"textdomain": "team-members-block",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"render": "file:./render.php"
+	"style": "file:./style-index.css"
 }

@@ -1,0 +1,27 @@
+.team-member-meta-box {
+	padding: 10px;
+}
+
+.team-member-meta-box label {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 5px;
+	font-size: 1rem;
+}
+
+.team-member-meta-box input[type='text'],
+.team-member-meta-box input[type='email'],
+.team-member-meta-box textarea {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+.team-member-meta-box textarea {
+	height: 100px;
+	resize: vertical;
+}
+
+.co {
+	color: black;
+}

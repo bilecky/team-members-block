@@ -1,4 +1,4 @@
-Contributors: The WordPress Contributors
+Contributors: bilecky
 Tags: block
 Stable tag: 0.1.0
 License: GPL-2.0-or-later

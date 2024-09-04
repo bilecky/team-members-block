@@ -33,6 +33,18 @@ function create_block_team_members_block_init()
 }
 add_action('init', 'create_block_team_members_block_init');
 
+//PLUGIN ADMIN STYLES
+// ----------------------------------------------------
+
+
+function team_member_admin_styles()
+{
+	wp_enqueue_style('team-member-admin-style', plugin_dir_url(__FILE__) . '/admin-style.css');
+}
+add_action('admin_enqueue_scripts', 'team_member_admin_styles');
+
+// ----------------------------------------------------
+
 function register_team_member_post_type()
 {
 	$args = array(
@@ -64,12 +76,12 @@ function register_team_member_post_type()
 	);
 	register_post_type('team_member', $args);
 
-	register_post_meta('team_member', 'stanowisko', array(
+	register_post_meta('team_member', 'position', array(
 		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'string',
 	));
-	register_post_meta('team_member', 'krotka_biografia', array(
+	register_post_meta('team_member', 'biography', array(
 		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'string',
@@ -79,13 +91,16 @@ function register_team_member_post_type()
 		'single' => true,
 		'type' => 'string',
 	));
-	register_post_meta('team_member', 'telefon', array(
+	register_post_meta('team_member', 'phone', array(
 		'show_in_rest' => true,
 		'single' => true,
 		'type' => 'string',
 	));
 }
 add_action('init', 'register_team_member_post_type');
+
+// ----------------------------------------------------
+
 
 function team_member_add_meta_boxes()
 {
@@ -100,27 +115,40 @@ function team_member_add_meta_boxes()
 }
 add_action('add_meta_boxes', 'team_member_add_meta_boxes');
 
+// ----------------------------------------------------
+//CALBACK TO UPPER FUNC ^^
+
 function team_member_meta_box_callback($post)
 {
 	wp_nonce_field(basename(__FILE__), 'team_member_nonce');
 
-	$stanowisko = get_post_meta($post->ID, 'stanowisko', true);
-	$krotka_biografia = get_post_meta($post->ID, 'krotka_biografia', true);
+	$position = get_post_meta($post->ID, 'position', true);
+	$biography = get_post_meta($post->ID, 'biography', true);
 	$email = get_post_meta($post->ID, 'email', true);
-	$telefon = get_post_meta($post->ID, 'telefon', true);
-
-	echo '<p><label for="stanowisko">Stanowisko</label>';
-	echo '<input type="text" id="stanowisko" name="stanowisko" value="' . esc_attr($stanowisko) . '" /></p>';
-
-	echo '<p><label for="krotka_biografia">Krótka Biografia</label>';
-	echo '<textarea id="krotka_biografia" name="krotka_biografia">' . esc_textarea($krotka_biografia) . '</textarea></p>';
-
-	echo '<p><label for="email">Email</label>';
-	echo '<input type="email" id="email" name="email" value="' . esc_attr($email) . '" /></p>';
-
-	echo '<p><label for="telefon">Telefon</label>';
-	echo '<input type="text" id="telefon" name="telefon" value="' . esc_attr($telefon) . '" /></p>';
+	$phone = get_post_meta($post->ID, 'phone', true);
+?>
+	<div class="team-member-meta-box">
+		<p>
+			<label for="position">Stanowisko:</label>
+			<input type="text" id="position" name="position" class="widefat" value="<?php echo esc_attr($position); ?>" />
+		</p>
+		<p>
+			<label for="biography">Krótka Biografia:</label>
+			<textarea id="biography" name="biography" class="widefat"><?php echo esc_textarea($biography); ?></textarea>
+		</p>
+		<p>
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email" class="widefat" value="<?php echo esc_attr($email); ?>" />
+		</p>
+		<p>
+			<label for="phone">Numer telefonu:</label>
+			<input type="text" id="phone" name="phone" class="widefat" value="<?php echo esc_attr($phone); ?>" />
+		</p>
+	</div>
+<?php
 }
+
+// ----------------------------------------------------
 
 
 function save_team_member_meta($post_id)
@@ -137,7 +165,7 @@ function save_team_member_meta($post_id)
 		return;
 	}
 
-	$fields = ['stanowisko', 'krotka_biografia', 'email', 'telefon'];
+	$fields = ['position', 'biography', 'email', 'phone'];
 	foreach ($fields as $field) {
 		if (array_key_exists($field, $_POST)) {
 			update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
@@ -146,20 +174,22 @@ function save_team_member_meta($post_id)
 }
 add_action('save_post', 'save_team_member_meta');
 
+// ----------------------------------------------------
+
 
 function add_meta_fields_to_rest_api($response, $post, $context)
 {
 	if ($post->post_type === 'team_member') {
 		$thumbnail_id = get_post_thumbnail_id($post->ID);
 		// Pobierz URL miniaturki
-		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'medium');
+		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'large');
 
 
 		$meta_fields = array(
-			'stanowisko' => get_post_meta($post->ID, 'stanowisko', true),
-			'krotka_biografia' => get_post_meta($post->ID, 'krotka_biografia', true),
+			'position' => get_post_meta($post->ID, 'position', true),
+			'biography' => get_post_meta($post->ID, 'biography', true),
 			'email' => get_post_meta($post->ID, 'email', true),
-			'telefon' => get_post_meta($post->ID, 'telefon', true),
+			'phone' => get_post_meta($post->ID, 'phone', true),
 			'avatar' => $thumbnail_url,  // Dodaj URL miniaturki
 
 		);
@@ -168,3 +198,5 @@ function add_meta_fields_to_rest_api($response, $post, $context)
 	return $response;
 }
 add_filter('rest_prepare_team_member', 'add_meta_fields_to_rest_api', 10, 3);
+
+// ----------------------------------------------------

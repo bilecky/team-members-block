@@ -18,8 +18,8 @@ foreach ($team_members as $member) {
 		'id' => $member->ID,
 		'title' => get_the_title($member->ID),
 		'meta' => array(
-			'stanowisko' => get_post_meta($member->ID, 'stanowisko', true),
-			'krotka_biografia' => get_post_meta($member->ID, 'krotka_biografia', true),
+			'position' => get_post_meta($member->ID, 'position', true),
+			'biography' => get_post_meta($member->ID, 'biography', true),
 			'email' => get_post_meta($member->ID, 'email', true),
 			'telefon' => get_post_meta($member->ID, 'telefon', true),
 		),
