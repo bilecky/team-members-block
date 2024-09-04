@@ -183,7 +183,7 @@ function add_meta_fields_to_rest_api($response, $post, $context)
 	if ($post->post_type === 'team_member') {
 		$thumbnail_id = get_post_thumbnail_id($post->ID);
 		// Pobierz URL miniaturki
-		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'large');
+		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'thumbnail');
 
 
 		$meta_fields = array(
