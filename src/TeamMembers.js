@@ -36,7 +36,7 @@ const TeamMembers = props => {
 								</h2>
 								<p
 									style={{
-										color: props.customStyles.positionColor,
+										color: props.customStyles.generalColor,
 										fontSize: `${props.customStyles.positionSize}rem`,
 									}}
 									className='member-position'
@@ -48,11 +48,19 @@ const TeamMembers = props => {
 						<div className='member-details'>
 							<p className='member-bio'>{member.meta.biography}</p>
 							<a href={`mailto:${member.meta.email}`} className='member-contact'>
-								<MailAtSign01Icon size={22} className='icon-email' />
+								<MailAtSign01Icon
+									style={{ color: props.customStyles.generalColor }}
+									size={22}
+									className='icon-email'
+								/>
 								<span>{member.meta.email}</span>
 							</a>
 							<a href={`tel:${member.meta.phone}`} className='member-contact'>
-								<SmartPhone04Icon size={22} className='icon-phone' />
+								<SmartPhone04Icon
+									style={{ color: props.customStyles.generalColor }}
+									size={22}
+									className='icon-phone'
+								/>
 								<span>{member.meta.phone}</span>
 							</a>
 						</div>

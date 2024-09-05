@@ -50,7 +50,7 @@ const TeamMembers = props => {
       className: "member-name"
     }, member.title.rendered), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
       style: {
-        color: props.customStyles.positionColor,
+        color: props.customStyles.generalColor,
         fontSize: `${props.customStyles.positionSize}rem`
       },
       className: "member-position"
@@ -62,12 +62,18 @@ const TeamMembers = props => {
       href: `mailto:${member.meta.email}`,
       className: "member-contact"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(hugeicons_react__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      style: {
+        color: props.customStyles.generalColor
+      },
       size: 22,
       className: "icon-email"
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, member.meta.email)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
       href: `tel:${member.meta.phone}`,
       className: "member-contact"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(hugeicons_react__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      style: {
+        color: props.customStyles.generalColor
+      },
       size: 22,
       className: "icon-phone"
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, member.meta.phone))));
@@ -114,7 +120,7 @@ function Edit({
   const {
     headerColor,
     headerSize,
-    positionColor,
+    generalColor,
     positionSize
   } = attributes;
   const teamMembers = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => {
@@ -140,6 +146,16 @@ function Edit({
       ...blockProps
     }, "Nie znaleziono cz\u0142onk\xF3w zespolu");
   }
+  const resetHeaderSize = () => {
+    setAttributes({
+      headerSize: 1.4
+    });
+  };
+  const resetPositionSize = () => {
+    setAttributes({
+      positionSize: 1.1
+    });
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
@@ -152,7 +168,10 @@ function Edit({
     }),
     min: 1,
     max: 100
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    isSecondary: true,
+    onClick: resetHeaderSize
+  }, "Zresetuj rozmiar nag\u0142\xF3wka"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
     label: "Kolor nag\u0142\xF3wka",
     value: headerColor,
     onChange: color => setAttributes({
@@ -160,13 +179,7 @@ function Edit({
     })
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: "Ustawienia stanowiska"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
-    label: "Kolor stanowiska",
-    value: positionColor,
-    onChange: color => setAttributes({
-      positionColor: color
-    })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
     label: "Rozmiar stanowiska (REM)",
     value: positionSize,
     onChange: value => setAttributes({
@@ -174,11 +187,20 @@ function Edit({
     }),
     min: 1,
     max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    isSecondary: true,
+    onClick: resetPositionSize
+  }, "Zresetuj rozmiar stanowiska"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+    label: "Kolor stanowiska",
+    value: generalColor,
+    onChange: color => setAttributes({
+      generalColor: color
+    })
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_TeamMembers__WEBPACK_IMPORTED_MODULE_4__["default"], {
     customStyles: {
       headerColor,
       headerSize,
-      positionColor,
+      generalColor,
       positionSize
     },
     members: teamMembers
@@ -252,7 +274,7 @@ function save({
   const {
     headerColor,
     headerSize,
-    positionColor,
+    generalColor,
     positionSize,
     teamMembers
   } = attributes;
@@ -262,7 +284,7 @@ function save({
     customStyles: {
       headerColor,
       headerSize,
-      positionColor,
+      generalColor,
       positionSize
     },
     members: teamMembers
@@ -460,7 +482,7 @@ module.exports = window["wp"]["element"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members-block","version":"0.1.0","title":"Team Members Block","category":"widgets","description":"Blok mapuje wszystkich członków zespołu wraz z informacjami. Blok zaprogramowany przez bilecky dla: HUBRA","example":{},"attributes":{"teamMembers":{"type":"array","default":[]},"headerColor":{"type":"string","default":"#ffffff"},"headerSize":{"type":"number","default":1.4},"positionColor":{"type":"string","default":"#21aa91"},"positionSize":{"type":"number","default":1.1}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"team-members-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members-block","version":"0.1.0","title":"Team Members Block","category":"widgets","description":"Blok mapuje wszystkich członków zespołu wraz z informacjami. Blok zaprogramowany przez bilecky dla: HUBRA","example":{},"attributes":{"teamMembers":{"type":"array","default":[]},"headerColor":{"type":"string","default":"#ffffff"},"headerSize":{"type":"number","default":1.4},"generalColor":{"type":"string","default":"#21aa91"},"positionSize":{"type":"number","default":1.1}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"team-members-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

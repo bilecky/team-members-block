@@ -20,7 +20,7 @@
       "type": "number",
       "default": 1.4
     },
-    "positionColor": {
+    "generalColor": {
       "type": "string",
       "default": "#21aa91"
     },
