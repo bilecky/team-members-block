@@ -27,6 +27,14 @@
 		"positionSize": {
 			"type": "number",
 			"default": 1.1
+		},
+		"filters": {
+			"type": "object",
+			"default": {
+				"grayscale": 20,
+				"brightness": 90,
+				"contrast": 75
+			}
 		}
 	},
 	"supports": {

@@ -35,7 +35,10 @@ const TeamMembers = props => {
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       src: memberAvatar,
       alt: member.title.rendered,
-      className: "member-avatar"
+      className: "member-avatar",
+      style: {
+        filter: `grayscale(${props.customStyles.filters.grayscale}%) brightness(${props.customStyles.filters.brightness}%) contrast(${props.customStyles.filters.contrast}%)`
+      }
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "member-overlay"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
@@ -121,7 +124,8 @@ function Edit({
     headerColor,
     headerSize,
     generalColor,
-    positionSize
+    positionSize,
+    filters
   } = attributes;
   const teamMembers = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => {
     return select('core').getEntityRecords('postType', 'team_member', {
@@ -156,10 +160,20 @@ function Edit({
       positionSize: 1.1
     });
   };
+  const resetFilters = () => {
+    setAttributes({
+      filters: {
+        grayscale: 20,
+        brightness: 90,
+        contrast: 75
+      }
+    });
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: "Ustawienia nag\u0142\xF3wka"
+    title: "Ustawienia nag\u0142\xF3wka",
+    initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
     label: "Rozmiar nag\u0142\xF3wka (REM)",
     value: headerSize,
@@ -178,7 +192,8 @@ function Edit({
       headerColor: color
     })
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
-    title: "Ustawienia stanowiska"
+    title: "Ustawienia stanowiska",
+    initialOpen: false
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
     label: "Rozmiar stanowiska (REM)",
     value: positionSize,
@@ -196,12 +211,51 @@ function Edit({
     onChange: color => setAttributes({
       generalColor: color
     })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_TeamMembers__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: "Ustawienia filtr\xF3w",
+    initialOpen: false
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+    label: "Grayscale",
+    value: filters.grayscale,
+    onChange: value => setAttributes({
+      filters: {
+        ...filters,
+        grayscale: value
+      }
+    }),
+    min: 0,
+    max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+    label: "Brightness",
+    value: filters.brightness,
+    onChange: value => setAttributes({
+      filters: {
+        ...filters,
+        brightness: value
+      }
+    }),
+    min: 0,
+    max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+    label: "Contrast",
+    value: filters.contrast,
+    onChange: value => setAttributes({
+      filters: {
+        ...filters,
+        contrast: value
+      }
+    }),
+    min: 0,
+    max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: resetFilters
+  }, "Resetuj filtry"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_TeamMembers__WEBPACK_IMPORTED_MODULE_4__["default"], {
     customStyles: {
       headerColor,
       headerSize,
       generalColor,
-      positionSize
+      positionSize,
+      filters
     },
     members: teamMembers
   }));
@@ -276,7 +330,8 @@ function save({
     headerSize,
     generalColor,
     positionSize,
-    teamMembers
+    teamMembers,
+    filters
   } = attributes;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
@@ -285,7 +340,8 @@ function save({
       headerColor,
       headerSize,
       generalColor,
-      positionSize
+      positionSize,
+      filters
     },
     members: teamMembers
   }));
@@ -482,7 +538,7 @@ module.exports = window["wp"]["element"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members-block","version":"0.1.0","title":"Team Members Block","category":"widgets","description":"Blok mapuje wszystkich członków zespołu wraz z informacjami. Blok zaprogramowany przez bilecky dla: HUBRA","example":{},"attributes":{"teamMembers":{"type":"array","default":[]},"headerColor":{"type":"string","default":"#ffffff"},"headerSize":{"type":"number","default":1.4},"generalColor":{"type":"string","default":"#21aa91"},"positionSize":{"type":"number","default":1.1}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"team-members-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members-block","version":"0.1.0","title":"Team Members Block","category":"widgets","description":"Blok mapuje wszystkich członków zespołu wraz z informacjami. Blok zaprogramowany przez bilecky dla: HUBRA","example":{},"attributes":{"teamMembers":{"type":"array","default":[]},"headerColor":{"type":"string","default":"#ffffff"},"headerSize":{"type":"number","default":1.4},"generalColor":{"type":"string","default":"#21aa91"},"positionSize":{"type":"number","default":1.1},"filters":{"type":"object","default":{"grayscale":20,"brightness":90,"contrast":75}}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"team-members-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

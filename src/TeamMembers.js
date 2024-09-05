@@ -15,6 +15,9 @@ const TeamMembers = props => {
 								src={memberAvatar}
 								alt={member.title.rendered}
 								className='member-avatar'
+								style={{
+									filter: `grayscale(${props.customStyles.filters.grayscale}%) brightness(${props.customStyles.filters.brightness}%) contrast(${props.customStyles.filters.contrast}%)`,
+								}}
 							/>
 							<div className='member-overlay'>
 								<h2

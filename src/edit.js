@@ -14,7 +14,7 @@ import { InspectorControls } from '@wordpress/block-editor'
 
 export default function Edit({ setAttributes, attributes }) {
 	const blockProps = useBlockProps()
-	const { headerColor, headerSize, generalColor, positionSize } = attributes
+	const { headerColor, headerSize, generalColor, positionSize, filters } = attributes
 
 	const teamMembers = useSelect(select => {
 		return select('core').getEntityRecords('postType', 'team_member', {
@@ -49,10 +49,14 @@ export default function Edit({ setAttributes, attributes }) {
 		setAttributes({ positionSize: 1.1 })
 	}
 
+	const resetFilters = () => {
+		setAttributes({ filters: { grayscale: 20, brightness: 90, contrast: 75 } })
+	}
+
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
-				<PanelBody title='Ustawienia nagłówka'>
+				<PanelBody title='Ustawienia nagłówka' initialOpen={false}>
 					<RangeControl
 						label='Rozmiar nagłówka (REM)'
 						value={headerSize}
@@ -71,7 +75,7 @@ export default function Edit({ setAttributes, attributes }) {
 						onChange={color => setAttributes({ headerColor: color })}
 					></ColorPalette>
 				</PanelBody>
-				<PanelBody title='Ustawienia stanowiska'>
+				<PanelBody title='Ustawienia stanowiska' initialOpen={false}>
 					<RangeControl
 						label='Rozmiar stanowiska (REM)'
 						value={positionSize}
@@ -90,10 +94,40 @@ export default function Edit({ setAttributes, attributes }) {
 						onChange={color => setAttributes({ generalColor: color })}
 					></ColorPalette>
 				</PanelBody>
+				<PanelBody title='Ustawienia filtrów' initialOpen={false}>
+					<RangeControl
+						label='Grayscale'
+						value={filters.grayscale}
+						onChange={value =>
+							setAttributes({ filters: { ...filters, grayscale: value } })
+						}
+						min={0}
+						max={100}
+					></RangeControl>
+					<RangeControl
+						label='Brightness'
+						value={filters.brightness}
+						onChange={value =>
+							setAttributes({ filters: { ...filters, brightness: value } })
+						}
+						min={0}
+						max={100}
+					></RangeControl>
+					<RangeControl
+						label='Contrast'
+						value={filters.contrast}
+						onChange={value =>
+							setAttributes({ filters: { ...filters, contrast: value } })
+						}
+						min={0}
+						max={100}
+					></RangeControl>
+					<button onClick={resetFilters}>Resetuj filtry</button>
+				</PanelBody>
 			</InspectorControls>
 
 			<TeamMembers
-				customStyles={{ headerColor, headerSize, generalColor, positionSize }}
+				customStyles={{ headerColor, headerSize, generalColor, positionSize, filters }}
 				members={teamMembers}
 			/>
 		</div>
