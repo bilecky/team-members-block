@@ -5,12 +5,28 @@
   "version": "0.1.0",
   "title": "Team Members Block",
   "category": "widgets",
-  "description": "Blok mapuje wszystkich członków zespołu wraz z informacjami.Blok zaprogramowany przez bilecky dla: HUBRA",
+  "description": "Blok mapuje wszystkich członków zespołu wraz z informacjami. Blok zaprogramowany przez bilecky dla: HUBRA",
   "example": {},
   "attributes": {
     "teamMembers": {
       "type": "array",
       "default": []
+    },
+    "headerColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "headerSize": {
+      "type": "number",
+      "default": 1.4
+    },
+    "positionColor": {
+      "type": "string",
+      "default": "#21aa91"
+    },
+    "positionSize": {
+      "type": "number",
+      "default": 1.1
     }
   },
   "supports": {

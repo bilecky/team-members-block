@@ -2,11 +2,14 @@ import { useBlockProps } from '@wordpress/block-editor'
 import TeamMembers from './TeamMembers'
 
 export default function save({ attributes }) {
-	console.log(attributes)
+	const { headerColor, headerSize, positionColor, positionSize, teamMembers } = attributes
 
 	return (
 		<div {...useBlockProps.save()}>
-			<TeamMembers members={attributes.teamMembers} />
+			<TeamMembers
+				customStyles={{ headerColor, headerSize, positionColor, positionSize }}
+				members={teamMembers}
+			/>
 		</div>
 	)
 }

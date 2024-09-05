@@ -3,6 +3,7 @@ import { MailAtSign01Icon, SmartPhone04Icon } from 'hugeicons-react'
 import defaultAvatar from './profile-boilerplate.jpg'
 
 const TeamMembers = props => {
+	console.log(props)
 	return (
 		<div className='team-members-grid'>
 			{props.members.map(member => {
@@ -16,8 +17,32 @@ const TeamMembers = props => {
 								className='member-avatar'
 							/>
 							<div className='member-overlay'>
-								<h2 className='member-name'>{member.title.rendered}</h2>
-								<p className='member-position'>{member.meta.position}</p>
+								<h2
+									ref={node => {
+										if (node) {
+											node.style.setProperty(
+												'color',
+												`${props.customStyles.headerColor}`,
+												'important'
+											)
+										}
+									}}
+									style={{
+										fontSize: `${props.customStyles.headerSize}rem`, // Zakłada, że headerSize jest liczbą, która jest już w `rem`
+									}}
+									className='member-name'
+								>
+									{member.title.rendered}
+								</h2>
+								<p
+									style={{
+										color: props.customStyles.positionColor,
+										fontSize: `${props.customStyles.positionSize}rem`,
+									}}
+									className='member-position'
+								>
+									{member.meta.position}
+								</p>
 							</div>
 						</div>
 						<div className='member-details'>

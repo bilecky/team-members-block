@@ -22,6 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const TeamMembers = props => {
+  console.log(props);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "team-members-grid"
   }, props.members.map(member => {
@@ -38,8 +39,20 @@ const TeamMembers = props => {
     }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "member-overlay"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
+      ref: node => {
+        if (node) {
+          node.style.setProperty('color', `${props.customStyles.headerColor}`, 'important');
+        }
+      },
+      style: {
+        fontSize: `${props.customStyles.headerSize}rem` // Zakłada, że headerSize jest liczbą, która jest już w `rem`
+      },
       className: "member-name"
     }, member.title.rendered), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+      style: {
+        color: props.customStyles.positionColor,
+        fontSize: `${props.customStyles.positionSize}rem`
+      },
       className: "member-position"
     }, member.meta.position))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "member-details"
@@ -91,10 +104,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 function Edit({
-  setAttributes
+  setAttributes,
+  attributes
 }) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
+  const {
+    headerColor,
+    headerSize,
+    positionColor,
+    positionSize
+  } = attributes;
   const teamMembers = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(select => {
     return select('core').getEntityRecords('postType', 'team_member', {
       per_page: -1,
@@ -120,7 +142,45 @@ function Edit({
   }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_TeamMembers__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: "Ustawienia nag\u0142\xF3wka"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+    label: "Rozmiar nag\u0142\xF3wka (REM)",
+    value: headerSize,
+    onChange: value => setAttributes({
+      headerSize: value
+    }),
+    min: 1,
+    max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+    label: "Kolor nag\u0142\xF3wka",
+    value: headerColor,
+    onChange: color => setAttributes({
+      headerColor: color
+    })
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+    title: "Ustawienia stanowiska"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+    label: "Kolor stanowiska",
+    value: positionColor,
+    onChange: color => setAttributes({
+      positionColor: color
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+    label: "Rozmiar stanowiska (REM)",
+    value: positionSize,
+    onChange: value => setAttributes({
+      positionSize: value
+    }),
+    min: 1,
+    max: 100
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_TeamMembers__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    customStyles: {
+      headerColor,
+      headerSize,
+      positionColor,
+      positionSize
+    },
     members: teamMembers
   }));
 }
@@ -189,11 +249,23 @@ __webpack_require__.r(__webpack_exports__);
 function save({
   attributes
 }) {
-  console.log(attributes);
+  const {
+    headerColor,
+    headerSize,
+    positionColor,
+    positionSize,
+    teamMembers
+  } = attributes;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_TeamMembers__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    members: attributes.teamMembers
+    customStyles: {
+      headerColor,
+      headerSize,
+      positionColor,
+      positionSize
+    },
+    members: teamMembers
   }));
 }
 
@@ -388,7 +460,7 @@ module.exports = window["wp"]["element"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members-block","version":"0.1.0","title":"Team Members Block","category":"widgets","description":"Blok mapuje wszystkich członków zespołu wraz z informacjami.Blok zaprogramowany przez bilecky dla: HUBRA","example":{},"attributes":{"teamMembers":{"type":"array","default":[]}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"team-members-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members-block","version":"0.1.0","title":"Team Members Block","category":"widgets","description":"Blok mapuje wszystkich członków zespołu wraz z informacjami. Blok zaprogramowany przez bilecky dla: HUBRA","example":{},"attributes":{"teamMembers":{"type":"array","default":[]},"headerColor":{"type":"string","default":"#ffffff"},"headerSize":{"type":"number","default":1.4},"positionColor":{"type":"string","default":"#21aa91"},"positionSize":{"type":"number","default":1.1}},"supports":{"color":{"background":false,"text":true},"html":false,"typography":{"fontSize":true}},"textdomain":"team-members-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 
