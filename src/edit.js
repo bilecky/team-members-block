@@ -122,7 +122,9 @@ export default function Edit({ setAttributes, attributes }) {
 						min={0}
 						max={100}
 					></RangeControl>
-					<button onClick={resetFilters}>Resetuj filtry</button>
+					<Button isSecondary onClick={resetFilters}>
+						Resetuj filtry
+					</Button>
 				</PanelBody>
 			</InspectorControls>
 

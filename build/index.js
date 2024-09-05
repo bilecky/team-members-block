@@ -247,7 +247,8 @@ function Edit({
     }),
     min: 0,
     max: 100
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    isSecondary: true,
     onClick: resetFilters
   }, "Resetuj filtry"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_TeamMembers__WEBPACK_IMPORTED_MODULE_4__["default"], {
     customStyles: {
