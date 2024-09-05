@@ -1,0 +1,32 @@
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./admin-style.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+.team-member-meta-box {
+  padding: 10px;
+}
+
+.team-member-meta-box label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.team-member-meta-box input[type=text],
+.team-member-meta-box input[type=email],
+.team-member-meta-box textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.team-member-meta-box textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.co {
+  color: black;
+}
+
+/*# sourceMappingURL=index.css.map*/

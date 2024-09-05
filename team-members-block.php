@@ -33,15 +33,15 @@ function create_block_team_members_block_init()
 }
 add_action('init', 'create_block_team_members_block_init');
 
-//PLUGIN ADMIN STYLES
+// PLUGIN ADMIN STYLES
 // ----------------------------------------------------
 
 
-// function team_member_admin_styles()
-// {
-// 	wp_enqueue_style('team-member-admin-style', plugin_dir_url(__FILE__) . '/admin-style.css');
-// }
-// add_action('admin_enqueue_scripts', 'team_member_admin_styles');
+function team_member_admin_styles()
+{
+	wp_enqueue_style('team-member-admin-style', plugin_dir_url(__FILE__) . '/build/index.css');
+}
+add_action('admin_enqueue_scripts', 'team_member_admin_styles');
 
 // ----------------------------------------------------
 
@@ -97,6 +97,11 @@ function register_team_member_post_type()
 		'single' => true,
 		'type' => 'string',
 	));
+	register_post_meta('team_member', 'avatar', array(
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+	));
 }
 add_action('init', 'register_team_member_post_type');
 
@@ -127,6 +132,7 @@ function team_member_meta_box_callback($post)
 	$biography = get_post_meta($post->ID, 'biography', true);
 	$email = get_post_meta($post->ID, 'email', true);
 	$phone = get_post_meta($post->ID, 'phone', true);
+	$avatar = get_post_meta($post->ID, 'avatar', true);
 ?>
 	<div class="team-member-meta-box">
 		<p>
@@ -145,8 +151,27 @@ function team_member_meta_box_callback($post)
 			<label for="phone">Numer telefonu:</label>
 			<input type="text" id="phone" name="phone" class="widefat" value="<?php echo esc_attr($phone); ?>" />
 		</p>
+		<p>
+			<label for="avatar">Rozmiar miniaturki:</label>
+			<select id="avatar" name="avatar" class="widefat"> <!-- Zmieniono na 'name="avatar"' -->
+				<?php
+				$sizes = get_intermediate_image_sizes();  // Pobieramy dostępne rozmiary obrazów
+				foreach ($sizes as $size_name) {
+					$selected = ($avatar === $size_name) ? 'selected' : '';  // Sprawdzamy, czy to zapisany avatar
+					echo "<option value='" . esc_attr($size_name) . "' $selected>" . esc_html($size_name) . "</option>";
+				}
+				?>
+			</select>
+		</p>
 	</div>
 <?php
+}
+
+// TAKE THUMBNAIL IMAGE SIZE
+
+function team_member_thumbnail_size($size)
+{
+	set_post_thumbnail_size(300, 300, true);
 }
 
 // ----------------------------------------------------
@@ -166,7 +191,7 @@ function save_team_member_meta($post_id)
 		return;
 	}
 
-	$fields = ['position', 'biography', 'email', 'phone'];
+	$fields = ['position', 'biography', 'email', 'phone', 'avatar'];
 	foreach ($fields as $field) {
 		if (array_key_exists($field, $_POST)) {
 			update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
@@ -183,7 +208,8 @@ function add_meta_fields_to_rest_api($response, $post, $context)
 	if ($post->post_type === 'team_member') {
 		$thumbnail_id = get_post_thumbnail_id($post->ID);
 		// Pobierz URL miniaturki
-		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'thumbnail');
+		$avatarMeta = get_post_meta($post->ID, 'avatar', true);
+		$thumbnail_url = wp_get_attachment_image_url($thumbnail_id, $avatarMeta);
 
 
 		$meta_fields = array(
